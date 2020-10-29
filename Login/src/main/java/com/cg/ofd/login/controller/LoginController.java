@@ -2,6 +2,8 @@ package com.cg.ofd.login.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 //import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -56,7 +58,14 @@ public class LoginController {
 	}
 	
 	@PostMapping(path = "/login/signup")
-	public Login signUp(@RequestBody Login login) { //@Valid @RequestBody Login login) {
-		return loginService.signUp(login);
+	public Login signUp(@Valid @RequestBody Login login) {
+		Login signup = loginService.signUp(login);
+		if(login == null) {
+			throw new UserNotFoundException("UserName and password should have at least 2 characters");
+		}
+		else {
+			return signup;
+		}
+		//return loginService.signUp(login);
 	}
 }

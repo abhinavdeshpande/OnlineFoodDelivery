@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 //import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Size;
@@ -18,12 +20,13 @@ public class Login {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	
-	//@NotNull
-	//@Size(min=2, message="userName should have at least 2 character")
+	@NotNull
+	@Size(min=2, message="userName should have at least 2 character")
 	@Column
 	private String userName;
 	
-	//@NotNull
+	@NotNull
+	@Size(min=4, message="password should have at least 4 character")
 	@Column
 	private String password;
 	
