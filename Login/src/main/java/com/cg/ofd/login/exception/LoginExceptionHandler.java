@@ -26,7 +26,7 @@ public class LoginExceptionHandler extends ResponseEntityExceptionHandler{
 	public ResponseEntity<LoginErrorResponse> handleException(Exception ex){
 		LoginErrorResponse errorResponse = new LoginErrorResponse();
 		errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-		errorResponse.setMessage(ex.getMessage());
+		errorResponse.setMessage("Record Not Found");
 		errorResponse.setTimeStamp(System.currentTimeMillis());
 		return new ResponseEntity<LoginErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
 	}

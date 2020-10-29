@@ -6,29 +6,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
 @Entity
-@Validated
 public class Login {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	
-	@NotNull
-	@Size(min=2, message="userName should have at least 2 character")
+	//@NotNull
+	//@Size(min=2, message="userName should have at least 2 character")
 	@Column
 	private String userName;
 	
-	@NotNull
+	//@NotNull
 	@Column
 	private String password;
 	
-	@NotNull
+	//@NotNull
 	@Column
 	private String role;
 	

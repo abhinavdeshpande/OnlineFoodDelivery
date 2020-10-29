@@ -2,7 +2,7 @@ package com.cg.ofd.login.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
+//import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +34,7 @@ public class LoginController {
 		else {
 			return login;
 		}
+		//return login;
 	}
 	
 	@GetMapping("/login/{userId}")
@@ -45,12 +46,17 @@ public class LoginController {
 	@GetMapping(path = "/login/{userName}/{password}")
 	public Login findByuserName(@PathVariable String userName,@PathVariable String password){
 		Login tmpList = loginService.findByuserNameAndPassword(userName, password);
-		//if(tmpLis)
-		return tmpList;
+		if(tmpList == null) {
+			throw new UserNotFoundException("UserName and Password not found");
+		}
+		else {
+			return tmpList;
+		}
+		//return tmpList;
 	}
 	
 	@PostMapping(path = "/login/signup")
-	public Login signUp(@Valid @RequestBody Login login) {
+	public Login signUp(@RequestBody Login login) { //@Valid @RequestBody Login login) {
 		return loginService.signUp(login);
 	}
 }
