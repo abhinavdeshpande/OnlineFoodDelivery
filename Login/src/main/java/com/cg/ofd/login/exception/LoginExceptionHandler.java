@@ -2,6 +2,7 @@ package com.cg.ofd.login.exception;
 
 import java.sql.Date;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,6 +31,13 @@ public class LoginExceptionHandler extends ResponseEntityExceptionHandler{
 		errorResponse.setTimeStamp(System.currentTimeMillis());
 		return new ResponseEntity<LoginErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
+	
+	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,HttpHeaders headers, HttpStatus status,WebRequest request) {
+		LoginErrorResponse response= new LoginErrorResponse(HttpStatus.BAD_REQUEST.value(), "UserName and password should have at least 2 characters",
+   			 System.currentTimeMillis());
+   	
+     return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
+   }
 	
 	//handling custom validation errors
 	/*@ExceptionHandler

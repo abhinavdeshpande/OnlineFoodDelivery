@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -39,6 +40,12 @@ public class Login {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param password
+	 * @param role
+	 */
 	public Login(int userId, String userName, String password, String role) {
 		super();
 		this.userId = userId;
