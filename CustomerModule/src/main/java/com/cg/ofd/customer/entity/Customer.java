@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -33,7 +33,7 @@ public class Customer {
 	private int customerId;
 
 	@Column(length = 32)
-	@NotNull(message="first name can not be empty")
+	@NotNull(message = "first name can not be empty")
 	@Size(min = 2, message = "First name must contain at least 2 characters")
 	@ApiModelProperty(notes = "First Name of the customer", name = "firstName", required = true, value = "Emily")
 	private String firstName;
@@ -46,7 +46,7 @@ public class Customer {
 
 	@ApiModelProperty(notes = "Gender of the customer", name = "gender", required = true, value = "Female")
 	@Column(length = 10)
-	@NotEmpty(message="Gender can not be empty")
+	@NotEmpty(message = "Gender can not be empty")
 	private String gender;
 
 	@ApiModelProperty(notes = "Age of the customer", name = "age", required = true, value = "25")
@@ -71,7 +71,6 @@ public class Customer {
 	@JoinColumn(name = "addressId")
 	@Valid
 	private Address address;
-	
 
 	public Customer(int customerId,
 			@NotNull(message = "first name can not be empty") @Size(min = 2, message = "First name must contain at least 2 characters") String firstName,
@@ -154,7 +153,5 @@ public class Customer {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	
 
 }

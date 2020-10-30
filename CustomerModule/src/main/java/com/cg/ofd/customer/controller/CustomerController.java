@@ -3,7 +3,6 @@ package com.cg.ofd.customer.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -38,8 +37,8 @@ public class CustomerController {
 	@PostMapping("/addCustomer")
 	public Customer addCustomer(@Valid @RequestBody Customer customer) {
 		logger.info("Inside addCustomer() method of Customer Controller");
-	
-		    return this.customerService.saveCustomer(customer);
+
+		return this.customerService.saveCustomer(customer);
 	}
 
 	@ApiOperation(value = "Update customer details", response = Customer.class)
@@ -65,8 +64,8 @@ public class CustomerController {
 	public Customer getCustomerById(@PathVariable int customerId) {
 		logger.info("Inside getCustomerById() method of Customer Controller");
 		return this.customerService.findCustomerById(customerId).orElseThrow(
-		() -> new CustomerNotFoundException("Customer with customer Id " + customerId + "not found"));
-		
+				() -> new CustomerNotFoundException("Customer with customer Id " + customerId + "not found"));
+
 	}
 
 	@ApiOperation(value = "Delete customer by Id", response = Customer.class)
@@ -82,11 +81,10 @@ public class CustomerController {
 		}
 
 	}
+
+	@ApiOperation(value = "Delete all Customer Details", response = Customer.class)
 	@DeleteMapping("/delete/all")
 	public void delete() {
 		this.customerService.delete();
 	}
 }
-
-
-
