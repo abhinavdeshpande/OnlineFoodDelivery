@@ -11,6 +11,8 @@ public interface CustomerService {
 	public Customer updateCustomer(Customer customer);
 	public List<Customer> findAllCustomer();
 	public Optional<Customer> findCustomerById(int customerId);
-	public void delete(int customerId);
+	public void deleteById(int customerId);
+	public void delete();
+	
 	
 }
