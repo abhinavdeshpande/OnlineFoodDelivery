@@ -49,4 +49,12 @@ public class CategoryServiceImpl implements CategoryService {
 		return catrepo.findAll();
 	}
 
+	@Override
+	public boolean deleteCategory(int categoryId) {
+		this.catrepo.deleteById(categoryId); 
+		return true;
+	}
+
+	
+
 }

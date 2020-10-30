@@ -64,4 +64,17 @@ public class Items {
 	@ManyToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
 	@JsonIgnoreProperties("item")
 	 List<Restaurant> restaurant;
+
+	public Items(int itemId, @Size(min = 2, message = "Name should have atleast 2 characters") String itemName,
+			Category category, @Min(value = 2, message = "min 2 digit number") int quantity,
+			@DecimalMax("1000.0") @DecimalMin("0.0") double cost) {
+		super();
+		this.itemId = itemId;
+		this.itemName = itemName;
+		this.category = category;
+		this.quantity = quantity;
+		this.cost = cost;
+	}
+	
+	
 }

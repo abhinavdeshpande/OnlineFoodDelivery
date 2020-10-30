@@ -61,7 +61,7 @@ public class CategoryController {
 	
 	@DeleteMapping("/deleteCategory/{categoryId}")
 	@ApiOperation(value = "Delete Category ", response = Iterable.class)
-	public void deleteCategory(@PathVariable int categoryId){
+	public void removeCategory(@PathVariable int categoryId){
 		logger.info("Inside deleteCategory() method of CategoryController");
 		 Optional<Category> cat= this.catservice.findCategory(categoryId);
 		if(!cat.isPresent()) {
@@ -70,6 +70,21 @@ public class CategoryController {
 		else {
         this.catservice.removeCategory(categoryId);
 		System.out.println("Category details of id "+ categoryId +" is successfully deleted");
+		}
+	}
+	
+	@DeleteMapping("/removeCategory1/{categoryId}")
+	@ApiOperation(value = "Delete Category ", response = Iterable.class)
+	public boolean deleteCategory(@PathVariable int categoryId){
+		logger.info("Inside removeCategory() method of CategoryController");
+		 Optional<Category> cat= this.catservice.findCategory(categoryId);
+		if(!cat.isPresent()) {
+			throw new EntityNotFoundException("Category id"+ categoryId +"not found");
+		}
+		else {
+        this.catservice.deleteCategory(categoryId);
+		System.out.println("Category details of id "+ categoryId +" is successfully deleted");
+		return true;
 		}
 	}
 

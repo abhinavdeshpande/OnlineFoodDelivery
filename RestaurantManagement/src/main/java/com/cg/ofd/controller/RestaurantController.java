@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "RestaurantController", description = "REST Apis related to Restaurant Entity!!!!")
 @RestController
+@RibbonClient(name="Restaurant-Microservice")
 @RequestMapping("/restaurant")
 public class RestaurantController {
 
@@ -120,9 +122,9 @@ public class RestaurantController {
 			return restro;
 	}
 	
-//	@GetMapping("/findRestaurantByItemName/{itemName}")
-//	public List<Restaurant> findRestaurantByItemName(@PathVariable String itemName){
-//       return this.restservice.findRestaurantByItemName(itemName);
-//	}
+	@GetMapping("/findRestaurantByItemName/{itemName}")
+	public List<Restaurant> findRestaurantByItemName(@PathVariable String itemName){
+       return this.restservice.findRestaurantByItemName(itemName);
+	}
 	
 }

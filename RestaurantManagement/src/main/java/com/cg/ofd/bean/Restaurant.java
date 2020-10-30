@@ -60,5 +60,19 @@ public class Restaurant {
 	@Size(min=10, message="Contactno should have atleast 10 digits")
 	@Column(length = 20)
 	private String contactNo;
+
+	public Restaurant(int restaurantId,
+			@Size(min = 2, message = "Name should have atleast 2 characters") String restaurantName, Address address,
+			@Size(min = 2, message = "ManagerName should have atleast 2 characters") String managerName,
+			@Size(min = 10, message = "Contactno should have atleast 10 digits") String contactNo) {
+		super();
+		this.restaurantId = restaurantId;
+		this.restaurantName = restaurantName;
+		this.address = address;
+		this.managerName = managerName;
+		this.contactNo = contactNo;
+	}
 	
+	 
+
 }

@@ -13,6 +13,7 @@ public interface CategoryService {
 	public Category addCategory(Category cat);
 	public Category updateCategory(Category cat);
 	public void removeCategory(int categoryId);
+	public boolean deleteCategory(int categoryId);	
 	public Optional<Category> findCategory(int categoryId);
 	public Category findOneCategory(int categoryId);
 	public List<Category> findAllCategory();
