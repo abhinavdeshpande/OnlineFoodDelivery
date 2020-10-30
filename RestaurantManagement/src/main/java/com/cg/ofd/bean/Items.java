@@ -1,0 +1,67 @@
+package com.cg.ofd.bean;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Items {
+
+	@Id
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "items_id_sequence", initialValue = 100, allocationSize = 1)
+	@GeneratedValue(generator = "items_id_sequence", strategy = GenerationType.SEQUENCE)
+	private int itemId;
+	
+	 @NotNull
+	 @Size(min=2, message="Name should have atleast 2 characters")
+	@Column(length=20)
+	private String itemName;
+
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoryId", referencedColumnName = "categoryId",foreignKey = @ForeignKey(name = "FK_category"))
+	private Category category;
+	
+	@Min(value=2,message="min 2 digit number")
+	@Column(length=20)
+	private int quantity;
+	
+	
+	@DecimalMax("1000.0") @DecimalMin("0.0") 
+	@Column(length=20)
+	private double cost;
+	
+	@ManyToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
+	@JsonIgnoreProperties("item")
+	 List<Restaurant> restaurant;
+}
