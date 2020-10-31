@@ -29,8 +29,12 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public void removeItem(int itemId) {
+		
+		Items i = itemrepo.findAll().stream().filter(id->id.getItemId() == itemId).findAny().get();
+		for(Restaurant r : i.getRestaurant()) {
+			r.item.remove(i);
+		}
 		itemrepo.deleteById(itemId);
-
 	}
 
 	@Override

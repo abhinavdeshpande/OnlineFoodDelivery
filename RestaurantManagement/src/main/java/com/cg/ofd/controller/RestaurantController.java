@@ -90,12 +90,7 @@ public class RestaurantController {
 	@ApiOperation(value = "Find A Restaurant ", response = Iterable.class)
 	public Restaurant findOneRestaurant(@PathVariable int restaurantId){
 		logger.info("Inside findOneRestaurant() method of RestaurantController"); 
-       Restaurant restro= this.restservice.findOneRestaurant(restaurantId);
-		if(restro.equals(null)) {
-			throw new EntityNotFoundException("restaurant id"+ restaurantId +"not found");
-		}
-		else
-			return restro;     
+		return this.restservice.findRestaurant(restaurantId).orElseThrow(()->new EntityNotFoundException("Restaurant id"+ restaurantId +"not found"));
 	}
 	
 	@GetMapping("/findRestaurant")

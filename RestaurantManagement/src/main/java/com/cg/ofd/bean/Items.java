@@ -37,12 +37,11 @@ import lombok.NoArgsConstructor;
 public class Items {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "items_id_sequence", initialValue = 100, allocationSize = 1)
 	@GeneratedValue(generator = "items_id_sequence", strategy = GenerationType.SEQUENCE)
 	private int itemId;
 	
-	 @NotNull
+	
 	 @Size(min=2, message="Name should have atleast 2 characters")
 	@Column(length=20)
 	private String itemName;
@@ -52,7 +51,7 @@ public class Items {
 	@JoinColumn(name = "categoryId", referencedColumnName = "categoryId",foreignKey = @ForeignKey(name = "FK_category"))
 	private Category category;
 	
-	@Min(value=2,message="min 2 digit number")
+	@Min(value=1,message="min 1 quantity should be present")
 	@Column(length=20)
 	private int quantity;
 	

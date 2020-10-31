@@ -36,15 +36,25 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void deleteById(int customerId) {
-		this.customerRepository.deleteById(customerId);
+	public void delete() {
+		this.customerRepository.deleteAll();
 
 	}
 
 	@Override
-	public void delete() {
-		this.customerRepository.deleteAll();
-		
+	public Customer findById(int customerId) {
+		return customerRepository.findAll().stream().filter(id -> id.getCustomerId() == customerId).findAny().get();
+
 	}
 
+	@Override
+	public Boolean deleteById(int customerId) {
+		this.customerRepository.deleteById(customerId);
+		return true;
+	}
+//	@Override
+//	public void deleteCustomerById(int customerId) {
+//		this.customerRepository.deleteById(customerId);
+//
+//	}
 }

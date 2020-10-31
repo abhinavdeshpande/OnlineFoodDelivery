@@ -40,7 +40,6 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Override
 	public Category findOneCategory(int categoryId) {
-		//return catrepo.getOne(categoryId);
 		return catrepo.findAll().stream().filter(id->id.getCategoryId() == categoryId).findAny().get();
 	}
 

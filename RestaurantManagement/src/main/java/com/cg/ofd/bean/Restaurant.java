@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,15 +42,16 @@ public class Restaurant {
 	private String restaurantName;
 	
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
+	@Valid
 	private Address address;
+	
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="Restro_Items",joinColumns = @JoinColumn(name="restaurantId"),
 			inverseJoinColumns = @JoinColumn(name="itemId"))
-	public
-	 List<Items> item;
+	public List<Items> item;
 	
 	 @NotNull
 	 @Size(min=2, message="ManagerName should have atleast 2 characters")

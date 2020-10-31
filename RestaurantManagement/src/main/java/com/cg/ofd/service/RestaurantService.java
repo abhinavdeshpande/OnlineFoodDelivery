@@ -19,7 +19,6 @@ public interface RestaurantService {
 	public Restaurant findOneRestaurant(int restaurantId);
 	public List<Restaurant> findAllRestaurant();
 	
-	public List<Restaurant> findNearByRestaurant(String area);
-	
+	public List<Restaurant> findNearByRestaurant(String area);	
 	public List<Restaurant> findRestaurantByItemName(String itemName);
 }

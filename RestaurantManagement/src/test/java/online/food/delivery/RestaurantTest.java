@@ -24,7 +24,7 @@ class RestaurantTest {
 	@Test
 	void testAddRestaurant() {
 		
-		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india",555555);
+		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india","555555");
 		
 		Category cat = new Category(16,"icecream2");
 		Category cat2 = new Category(17,"icecream3");
@@ -48,7 +48,7 @@ class RestaurantTest {
 	
 	@Test
 	public void findRestaurant() {
-		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india",555555);
+		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india","555555");
 		
 		Category cat = new Category(16,"icecream2");
 		Category cat2 = new Category(17,"icecream3");
