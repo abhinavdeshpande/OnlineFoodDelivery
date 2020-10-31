@@ -44,21 +44,23 @@ public class OrderController {
 	@PostMapping("/addOrder")
 	public OrderDetails addOrder(@RequestBody OrderDetails order) {
 		logger.info("Inside addOrder() method of OrderController");
-
-		return this.service.addOrder(order);
-		//System.out.println("Order with Order Id: " + order.getOrderId() + " added succesfully to the database!");
+		if (order.getOrderDate() == null || order.getOrderStatus() ==null) {
+			throw new OrderNotFoundException("Can not add order details: Please add order details");
+		} else {
+			return this.service.addOrder(order);
+		}
+		// System.out.println("Order with Order Id: " + order.getOrderId() + " added
+		// succesfully to the database!");
 	}
 
 	@PutMapping("/updateOrder")
 	public OrderDetails updateOrder(@RequestBody OrderDetails order) {
 		logger.info("Inside updateOrder() method of OrderController");
-		OrderDetails orderDetails =this.service.findOrder(order.getOrderId());
-		if(orderDetails==null)
-		{
-			throw new OrderNotFoundException("Order with "+order.getOrderId()+" is not not present");
-		}else
-		{
-		return this.service.updateOrder(order);
+		OrderDetails orderDetails = this.service.findOrder(order.getOrderId());
+		if (orderDetails == null) {
+			throw new OrderNotFoundException("Order with " + order.getOrderId() + " is not not present");
+		} else {
+			return this.service.updateOrder(order);
 		}
 	}
 
@@ -73,10 +75,10 @@ public class OrderController {
 		}
 	}
 
-	@GetMapping("/viewOrderOfRestaurant")
-	public List<OrderDetails> viewAllOrders(@RequestBody Restaurant res) {
+	@GetMapping("/viewAllOrdersByRes")
+	public List<OrderDetails> viewAllOrdersByRes(@PathVariable int restaurantId) {
 		logger.info("Inside viewAllOrders(res) method of OrderController");
-		List<OrderDetails> orderDetails = service.viewAllOrders(res);
+		List<OrderDetails> orderDetails = service.viewAllOrdersByRestaurant(restaurantId);
 		if (orderDetails.isEmpty()) {
 			throw new OrderNotFoundException("Order details of restaurant not found");
 		} else {
@@ -85,16 +87,32 @@ public class OrderController {
 
 	}
 
-	@GetMapping("/viewOrderOfCustomer")
-	public List<OrderDetails> viewAllOrders(@RequestBody Customer customer) {
-		logger.info("Inside viewAllOrders(customer) method of OrderController");
-		List<OrderDetails> orderDetails = service.viewAllOrders(customer); 
-		if (orderDetails.isEmpty()) {
-			throw new OrderNotFoundException("Order details of customer not found");
-		} else {
-			return orderDetails;
-		}
+	/*
+	 * @GetMapping("/viewOrderOfCustomer") public List<OrderDetails>
+	 * viewAllOrdersByCustomer(@RequestBody int customerId) {
+	 * logger.info("Inside viewAllOrders(customer) method of OrderController");
+	 * List<OrderDetails> orderDetails =
+	 * service.viewAllOrdersByCustomer(customerId); if (orderDetails.isEmpty()) {
+	 * throw new OrderNotFoundException("Order details of customer not found"); }
+	 * else { return orderDetails; } }
+	 */
+	
+	@GetMapping("/by/Customer/{customerId}")
+	public List<OrderDetails> findOrdersByCustomer(@PathVariable int customerId){
+		logger.info("Inside findOrdersByCustomer() method of OrderController");	
+		return service.viewAllOrdersByCustomer(customerId);
 	}
+	
+	/*
+	 * @GetMapping("/orders/by/restaurant/{restaurantId}") public List<OrderDetails>
+	 * findOrdersByRestaurants(@PathVariable int restaurantId) {
+	 * logger.info("Inside findBookingsByRestaurant() method of OrderController");
+	 * 
+	 * return service.viewOrder().stream().forEach(x ->
+	 * x.getFoodCart().getItemList()).filter(y ->
+	 * y.getRestaurants().getRestaurantId()==restaurantId).collect(Collectors.toList
+	 * ()); }
+	 */
 
 	@RequestMapping(value = "/deleteOrder/{orderId}", method = RequestMethod.DELETE)
 	public void removeOrder(@PathVariable Integer orderId) {
@@ -134,6 +152,17 @@ public class OrderController {
 		}
 	}
 
+	@DeleteMapping("/deleteCartByItemid/{cartId}/{itemId}")
+	public void deleteItemByItemId(@PathVariable int cartId, @PathVariable int itemId) {
+		logger.info("Inside deleteCartByItemId(cartId) method of OrderController");
+		FoodCart cart = foodCartservice.getCartById(cartId);
+		List<Item> itList = cart.getItemList();
+		for (Item item : itList) {
+			if (item.getItemId() == itemId) {
+				foodCartservice.removeItem(cartId);
+			}
+		}	
+	}
 
 	@GetMapping("/viewCart")
 	public List<FoodCart> viewCart() {
@@ -146,14 +175,30 @@ public class OrderController {
 		}
 	}
 
-	@GetMapping("/cartId/itemId/quantity")
-	public FoodCart increaseQuantity(@PathVariable int cartId, int itemId, int quantity) {
+	@PutMapping("/{cartId}/{itemId}/{quantity}")
+	public FoodCart increaseQuantity(@PathVariable int cartId, @PathVariable int itemId, @PathVariable int quantity) {
 
 		FoodCart cart = foodCartservice.getCartById(cartId);
 		List<Item> itList = cart.getItemList();
 		for (Item item : itList) {
 			if (item.getItemId() == itemId) {
 				int temp = item.getQuantity() + quantity;
+				item.setQuantity(temp);
+			}
+		}
+		cart.setItemList(itList);
+		foodCartservice.addItemToCart(cart);
+		return cart;
+	}
+
+	@PutMapping("/decreaseQuantity/{cartId}/{itemId}/{quantity}")
+	public FoodCart decreaseQuantity(@PathVariable int cartId, @PathVariable int itemId, @PathVariable int quantity) {
+
+		FoodCart cart = foodCartservice.getCartById(cartId);
+		List<Item> itList = cart.getItemList();
+		for (Item item : itList) {
+			if (item.getItemId() == itemId) {
+				int temp = item.getQuantity() - quantity;
 				item.setQuantity(temp);
 			}
 		}

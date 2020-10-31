@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import com.cg.ofd.bean.FoodCart;
 import com.cg.ofd.bean.Item;
 import com.cg.ofd.dao.FoodCartDao;
+import com.cg.ofd.dao.ItemDao;
 
 @Service
 public class FoodCartServiceImpl implements FoodCartServiceInterface {
 
 	@Autowired
 	private FoodCartDao foodDao;
+	
+	@Autowired
+	private ItemDao itemDao;
 
 	@Override
 	public FoodCart addItemToCart(FoodCart cart) {
@@ -27,8 +31,7 @@ public class FoodCartServiceImpl implements FoodCartServiceInterface {
 	}
 
 	@Override
-	public FoodCart reduceQuantity(FoodCart cart, Item item, int quantity) {
-		// TODO Auto-generated method stub
+	public FoodCart reduceQuantity(int cartId) {
 		return null;
 	}
 
@@ -38,14 +41,9 @@ public class FoodCartServiceImpl implements FoodCartServiceInterface {
 	 */
 
 	@Override
-	public void clearCart(int cartId) {
+	public boolean clearCart(int cartId) {
 		this.foodDao.deleteById(cartId);
-	}
-
-	@Override
-	public boolean removeItem(int cartId, int itemId) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -75,14 +73,12 @@ public class FoodCartServiceImpl implements FoodCartServiceInterface {
 
 	}
 
-//	@Override
-//	public boolean removeItem(int cartId, int itemId) {
-//		if(foodDao.getAllItemsByCartIdItemId(cartId, itemId)==null) {
-//			return false;
-//		}
-//		foodDao.removeItem(cartId, itemId);
-//		return true;
-//	}
+	@Override
+	public void removeItem(int cartId) {
+		this.foodDao.deleteById(cartId);
+	}
+
+	
 //
 //	@Override
 //	public List<Item> getAllItemsByCartIdItemId(int cartId, int itemId) {

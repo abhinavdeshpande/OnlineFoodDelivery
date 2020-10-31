@@ -27,4 +27,11 @@ public interface FoodCartDao extends JpaRepository<FoodCart, Integer> {
 //	@Transactional
 //	List<Item> getAllItemsByCartIdItemId(int cartId, int itemId);
 
+	/*
+	 * @Query("UPDATE FoodCart fc SET fc.quantity=:quantity WHERE fc.cartId=:cartId and fc.itemId=:itemId"
+	 * )
+	 * 
+	 * @Transactional void updateItemInCart(@Param("cartId") int
+	 * cartId, @Param("itemId") String itemId , @Param("quantity") int quantity);
+	 */
 }

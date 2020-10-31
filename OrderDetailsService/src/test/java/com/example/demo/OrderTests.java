@@ -84,8 +84,42 @@ public class OrderTests {
 		OrderServiceInterface orderService = mock(OrderServiceImpl.class);
 		when(orderService.findOrder(1)).thenReturn(orderDetails);
 		OrderDetails ordDetails2 = orderService.findOrder(1);
-		assertEquals("true", orderDetails.getOrderStatus());
+		assertEquals(orderDetails, ordDetails2);
 	}
+	
+	@Test
+	 public void removeOrder()
+	 {
+		Address hoteladdress = new Address(101, "Pride", "S10Road", "Shivajinagar", "Pune", "Maharashtra", "India",
+				412217);
+
+		Address custaddress = new Address(102, "Shashikant", "Lane2", "Swargate", "Pune", "Maharashtra", "India",
+				412201);
+
+		Category cat = new Category(103, "FastFood");
+
+		List<Restaurant> restro = new ArrayList<>();
+
+		Restaurant r1 = new Restaurant(101, "Sahara", hoteladdress, "Tejaswi", "9011872311");
+
+		restro.add(r1);
+
+		List<Item> items = new ArrayList<>();
+		Item item = new Item(114, "item6", cat, 2, 100, restro);
+		items.add(item);
+
+		Customer cust = new Customer(1, "Tejaswi", "Midgule", "female", 22, "9011872311", custaddress,
+				"tmidgule98@gmail.com");
+
+		FoodCart cart = new FoodCart(12, cust, items);
+		OrderDetails orderDetails = new OrderDetails(1, "2019-12-11", "true",cart);
+		OrderServiceInterface orderService = mock(OrderServiceImpl.class);
+		orderService.addOrder(orderDetails);
+		
+		when(orderService.removeOrder(1)).thenReturn(Boolean.TRUE);
+		Boolean orderService2=orderService.removeOrder(1);;
+		assertEquals(Boolean.TRUE, orderService2);
+	 }
 	
 
 
