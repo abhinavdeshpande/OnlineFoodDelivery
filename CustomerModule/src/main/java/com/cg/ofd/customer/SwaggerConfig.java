@@ -18,13 +18,15 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket docket() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot"))).build();
-							
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
+				.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot"))).build();
+
 	}
-	
+
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("Customer Details API")
-				.description("This API can be used to get details level of action and information for a customer").version("V1.0").build();
+				.description("This API can be used to get details level of action and information for a customer")
+				.version("V1.0").build();
 	}
 }
 

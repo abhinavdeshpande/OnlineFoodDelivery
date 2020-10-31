@@ -56,9 +56,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     
 	@Override
 	public List<Restaurant> findRestaurantByItemName(String itemName) {
-		//return this.restrepo.findAll().stream().filter(name -> name.getItemName().equals(item.itemName)).collect(Collectors.toList());
-		return this.restrepo.findAll().stream().filter(name -> name.getItem().equals(itemName)).collect(Collectors.toList());
-		
+		return this.restrepo.findRestaurantByItemName(itemName);
 	}
 
 	

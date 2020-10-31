@@ -104,12 +104,7 @@ public class CategoryController {
 	@ApiOperation(value = "Find A Category", response = Iterable.class)
 	public Category findOneCategory(@PathVariable int categoryId){
 		logger.info("Inside findOneCategory() method of CategoryController");
-		Category cat= this.catservice.findOneCategory(categoryId);
-		if(cat.equals(null)) {
-			throw new EntityNotFoundException("Category id"+ categoryId +"not found");
-		}
-		else
-			return cat;
+		return this.catservice.findCategory(categoryId).orElseThrow(()->new EntityNotFoundException("Category id"+ categoryId +"not found"));
 	}
 	
 	@GetMapping("/findCategory")

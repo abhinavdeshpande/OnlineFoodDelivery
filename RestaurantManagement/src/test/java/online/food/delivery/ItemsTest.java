@@ -6,13 +6,16 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.cg.ofd.bean.Address;
 import com.cg.ofd.bean.Category;
 import com.cg.ofd.bean.Items;
 import com.cg.ofd.bean.Restaurant;
+import com.cg.ofd.dao.ItemRepository;
 import com.cg.ofd.service.CategoryService;
 import com.cg.ofd.service.CategoryServiceImpl;
 import com.cg.ofd.service.ItemService;
@@ -23,7 +26,7 @@ class ItemsTest {
 	@Test
 	void testAddItems() {
 		Category cat = new Category(16,"icecream2");
-		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india",555555);
+		Address address= new Address(530,"gopalpatti","lane3","hadapsar","pune","ms","india","555555");
 		
 		List<Restaurant> restro = new ArrayList<>(); 
 		Restaurant r1=new Restaurant(100009,"KFC",address,"Sulekha","9898989898");
@@ -73,17 +76,21 @@ class ItemsTest {
 		List<Items> item1 = new ArrayList<>(); 
 		Items i1 = new Items(114,"item6",cat,45,60);
 		Items i2 = new Items(115,"item7",cat,46,61);
-		Items i3 = new Items(115,"item8",cat2,46,61);
+		Items i3 = new Items(116,"item8",cat2,46,61);
 		item1.add(i1);
 		item1.add(i2);
 		item1.add(i3);
 		
+		
 		ItemService itemservice = mock(ItemServiceImpl.class);
 		System.out.println(item1);
-		when(itemservice.findAllItems(cat2)).thenReturn(item1);
 		
-		List<Items> item2 =itemservice.findAllItems(cat2);//giving all 3 //item1.contains(cat2)//this should be boolean not object
+		
+		List<Items> item2=itemservice.findAllItems().stream().filter(x->x.getCategory().getCategoryName().equals("icecream3")).collect(Collectors.toList());
 		System.out.println(item2);
-		assertEquals(1,item2.size());
+		when(itemservice.findAllItems(cat2)).thenReturn(item2);
+		List<Items> item3 =itemservice.findAllItems(cat2);
+		System.out.println(item3);
+		assertEquals(1,item3.size());
 	}
 }

@@ -17,5 +17,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> 
 	@Query("select r from Restaurant r where address.area =:area")
 	public List<Restaurant> findNearByRestaurant(String area);
 	
+	@Query("select r from Restaurant r left join r.item i where i.itemName =:itemName")
+	public List<Restaurant> findRestaurantByItemName(String itemName);
 	
 }

@@ -21,12 +21,10 @@ import lombok.NoArgsConstructor;
 public class Category {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "category_id_sequence", initialValue = 1, allocationSize = 1)
 	  @GeneratedValue(generator = "category_id_sequence", strategy = GenerationType.SEQUENCE)
 	private int categoryId;
 	
-	 @NotNull
 	@Size(min=2, message="Name should have atleast 2 characters")
 	@Column(length=20)
 	private String categoryName;

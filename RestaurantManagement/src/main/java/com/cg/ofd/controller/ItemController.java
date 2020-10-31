@@ -89,13 +89,6 @@ public class ItemController {
 	@ApiOperation(value = "Find A Item ", response = Iterable.class)
 	public Items findOneItem(@PathVariable int itemId){
 		logger.info("Inside findOneItem() method of ItemController");
-		
-//		Items item= this.itemservice.findOneItem(itemId);
-//		if(item.equals(null)) {
-//			throw new EntityNotFoundException("Items id"+ itemId +"not found");
-//		}
-//		else
-//			return item;
 		return this.itemservice.findItem(itemId).orElseThrow(()->new EntityNotFoundException("Items id"+ itemId +"not found"));
 	}
 	

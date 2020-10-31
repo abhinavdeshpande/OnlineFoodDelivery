@@ -3,6 +3,8 @@ package com.cg.ofd.customer.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,9 @@ public class CustomerController {
 
 	@ApiOperation(value = "Insert customer details", response = Customer.class)
 	@PostMapping("/addCustomer")
-	public Customer addCustomer(@RequestBody Customer customer) {
+	public Customer addCustomer(@Valid @RequestBody Customer customer) {
 		logger.info("Inside addCustomer() method of Customer Controller");
+
 		return this.customerService.saveCustomer(customer);
 	}
 
@@ -60,22 +63,28 @@ public class CustomerController {
 	@GetMapping("/search/{customerId}")
 	public Customer getCustomerById(@PathVariable int customerId) {
 		logger.info("Inside getCustomerById() method of Customer Controller");
-		return this.customerService.findCustomerById(customerId)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with customer Id "+ customerId + "not found"));
+		return this.customerService.findCustomerById(customerId).orElseThrow(
+				() -> new CustomerNotFoundException("Customer with customer Id " + customerId + "not found"));
+
 	}
 
 	@ApiOperation(value = "Delete customer by Id", response = Customer.class)
 	@DeleteMapping("/delete/{customerId}")
 	public void deleteById(@PathVariable int customerId) {
 		logger.info("Inside deleteById() method of Customer Controller");
-	
 		Optional<Customer> customer = customerService.findCustomerById(customerId);
 		if (customer == null)
 			throw new CustomerNotFoundException("Customer with customer Id:" + customerId + "does not exist");
 		else {
-			this.customerService.delete(customerId);
+			this.customerService.deleteById(customerId);
 			System.out.println("Customer with customer Id" + customerId + "removed successfully from the database");
 		}
 
+	}
+
+	@ApiOperation(value = "Delete all Customer Details", response = Customer.class)
+	@DeleteMapping("/delete/all")
+	public void delete() {
+		this.customerService.delete();
 	}
 }

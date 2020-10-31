@@ -1,4 +1,4 @@
-package com.cg.ofd;
+package com.cg.ofd.customer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
