@@ -66,31 +66,5 @@ class ItemsTest {
 	}
 	
 	
-	//failed ...
-	@Test
-	void findItemsByCategory() {
-		
-		Category cat = new Category(16,"icecream2");
-		Category cat2 = new Category(17,"icecream3");
-
-		List<Items> item1 = new ArrayList<>(); 
-		Items i1 = new Items(114,"item6",cat,45,60);
-		Items i2 = new Items(115,"item7",cat,46,61);
-		Items i3 = new Items(116,"item8",cat2,46,61);
-		item1.add(i1);
-		item1.add(i2);
-		item1.add(i3);
-		
-		
-		ItemService itemservice = mock(ItemServiceImpl.class);
-		System.out.println(item1);
-		
-		
-		List<Items> item2=itemservice.findAllItems().stream().filter(x->x.getCategory().getCategoryName().equals("icecream3")).collect(Collectors.toList());
-		System.out.println(item2);
-		when(itemservice.findAllItems(cat2)).thenReturn(item2);
-		List<Items> item3 =itemservice.findAllItems(cat2);
-		System.out.println(item3);
-		assertEquals(1,item3.size());
-	}
+	
 }

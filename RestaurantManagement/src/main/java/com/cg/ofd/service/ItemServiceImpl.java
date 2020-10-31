@@ -28,13 +28,34 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public void removeItem(int itemId) {
+	public void removeItem(int itemId) { //working but deleting evrything items,restro,address
 		
-		Items i = itemrepo.findAll().stream().filter(id->id.getItemId() == itemId).findAny().get();
-		for(Restaurant r : i.getRestaurant()) {
-			r.item.remove(i);
+//		Items i = itemrepo.findAll().stream().filter(id->id.getItemId() == itemId).findAny().get();// i  is list
+//		for(Restaurant r : i.getRestaurant()) {
+//			r.item.remove(i);
+//		}
+//		itemrepo.deleteById(itemId);
+		
+//		Items i = itemrepo.findAll().stream().filter(id->id.getItemId() == itemId).findAny().get();
+//		for(Restaurant r: i.getRestaurant()) {
+//			//r.getItem().remove(itemId);//notwrking
+//			r.item.remove(i);			
+//		}
+		//itemrepo.deleteById(itemId);
+		//itemrepo.delete(i);
+		
+		Items i =itemrepo.findAll().stream().filter(id->id.getItemId() == itemId).findAny().get();
+		if(i!=null) {
+			try {
+				i.getRestaurant().forEach(restaurant->{restaurant.getItem().remove(i);});
+				itemrepo.delete(i);
+			
+			}catch (Exception e) {
+                e.printStackTrace();
+            }
 		}
-		itemrepo.deleteById(itemId);
+		
+		
 	}
 
 	@Override

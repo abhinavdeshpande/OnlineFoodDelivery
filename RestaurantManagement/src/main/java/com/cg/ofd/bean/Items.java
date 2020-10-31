@@ -60,7 +60,7 @@ public class Items {
 	@Column(length=20)
 	private double cost;
 	
-	@ManyToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
+	@ManyToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH}) 
 	@JsonIgnoreProperties("item")
 	 List<Restaurant> restaurant;
 

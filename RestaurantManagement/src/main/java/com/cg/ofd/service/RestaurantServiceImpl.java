@@ -30,7 +30,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public void removeRestaurant(int restaurantId) {
-		 this.restrepo.deleteById(restaurantId);
+		// this.restrepo.deleteById(restaurantId);
+		Restaurant r = restrepo.findAll().stream().filter(id->id.getRestaurantId()==restaurantId).findAny().get();
+		if(r!=null) {
+			try {
+				r.getItem().forEach(item->{item.getRestaurant().remove(r);});
+				restrepo.delete(r);
+				
+			}catch (Exception e) {
+                e.printStackTrace();
+            }
+		}
 
 	}
 
