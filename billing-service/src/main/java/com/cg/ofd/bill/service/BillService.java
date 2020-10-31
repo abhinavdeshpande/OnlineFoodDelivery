@@ -16,7 +16,7 @@ public interface BillService {
 	
 	public Bill addBill(Bill bill);
 	public Bill updateBill(Bill bill);
-	public void removeBill(int billId);
+	public boolean removeBill(int billId);
 	//public Bill viewBill(Bill bill);
 	//public List<Bill> viewBills(LocalDate startDate,LocalDate endDate);
 	//public List<Bill> viewBills(String custId);

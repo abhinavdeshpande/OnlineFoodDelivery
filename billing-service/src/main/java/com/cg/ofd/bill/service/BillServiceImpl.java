@@ -36,9 +36,10 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public void removeBill(int billId) {
+	public boolean removeBill(int billId) {
 		System.out.println("Inside removeBill() method");
 		billRepository.deleteById(billId);
+		return true;
 	}
 
 	/*
