@@ -1,7 +1,7 @@
 package com.cg.ofd.customer.controller;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import javax.validation.Valid;
 
@@ -63,8 +63,11 @@ public class CustomerController {
 	@GetMapping("/search/{customerId}")
 	public Customer getCustomerById(@PathVariable int customerId) {
 		logger.info("Inside getCustomerById() method of Customer Controller");
-		return this.customerService.findCustomerById(customerId).orElseThrow(
-				() -> new CustomerNotFoundException("Customer with customer Id " + customerId + "not found"));
+		Customer customer = this.customerService.findById(customerId);
+		if (customer == null)
+			throw new CustomerNotFoundException("Customer with customer Id:" + customerId + "does not exist");
+		else
+			return customer;
 
 	}
 
@@ -72,7 +75,7 @@ public class CustomerController {
 	@DeleteMapping("/delete/{customerId}")
 	public void deleteById(@PathVariable int customerId) {
 		logger.info("Inside deleteById() method of Customer Controller");
-		Optional<Customer> customer = customerService.findCustomerById(customerId);
+		Customer customer = customerService.findById(customerId);
 		if (customer == null)
 			throw new CustomerNotFoundException("Customer with customer Id:" + customerId + "does not exist");
 		else {
@@ -84,7 +87,7 @@ public class CustomerController {
 
 	@ApiOperation(value = "Delete all Customer Details", response = Customer.class)
 	@DeleteMapping("/delete/all")
-	public void delete() {
+	public void deleteAll() {
 		this.customerService.delete();
 	}
 }

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -17,18 +18,14 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-
-import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @ApiModel(description = "Customer Model")
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "customer_id_sequence", initialValue = 100, allocationSize = 1)
+	@GeneratedValue(generator="customer_id_sequence",strategy = GenerationType.SEQUENCE)
 	@ApiModelProperty(notes = "Id of the customer", name = "customerId", required = true, value = "123")
 	private int customerId;
 
@@ -71,6 +68,10 @@ public class Customer {
 	@JoinColumn(name = "addressId")
 	@Valid
 	private Address address;
+
+	public Customer() {
+
+	}
 
 	public Customer(int customerId,
 			@NotNull(message = "first name can not be empty") @Size(min = 2, message = "First name must contain at least 2 characters") String firstName,

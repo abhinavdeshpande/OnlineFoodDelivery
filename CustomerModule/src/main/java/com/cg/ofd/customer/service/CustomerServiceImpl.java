@@ -1,7 +1,6 @@
 package com.cg.ofd.customer.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +30,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Optional<Customer> findCustomerById(int customerId) {
-		return this.customerRepository.findById(customerId);
-	}
-
-	@Override
 	public void delete() {
 		this.customerRepository.deleteAll();
 
@@ -52,9 +46,4 @@ public class CustomerServiceImpl implements CustomerService {
 		this.customerRepository.deleteById(customerId);
 		return true;
 	}
-//	@Override
-//	public void deleteCustomerById(int customerId) {
-//		this.customerRepository.deleteById(customerId);
-//
-//	}
 }

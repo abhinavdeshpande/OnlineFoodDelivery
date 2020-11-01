@@ -8,4 +8,6 @@ import com.cg.ofd.customer.entity.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Integer>{
 
+
+
 }

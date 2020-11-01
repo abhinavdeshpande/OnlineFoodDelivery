@@ -1,7 +1,7 @@
 package com.cg.ofd.customer.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import com.cg.ofd.customer.entity.Customer;
 
@@ -13,13 +13,10 @@ public interface CustomerService {
 
 	public List<Customer> findAllCustomer();
 
-	public Optional<Customer> findCustomerById(int customerId);
-
-//	public void deleteCustomerById(int customerId);
-	public void delete();
-
 	public Customer findById(int customerId);
 
 	public Boolean deleteById(int customerId);
+
+	public void delete();
 
 }
