@@ -16,30 +16,29 @@ import org.springframework.validation.annotation.Validated;
 
 @Entity
 public class Login {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
-	
+
 	@NotNull
-	@Size(min=2, message="userName should have at least 2 character")
+	@Size(min = 2, message = "userName should have at least 2 character")
 	@Column
 	private String userName;
-	
+
 	@NotNull
-	@Size(min=4, message="password should have at least 4 character")
+	@Size(min = 4, message = "password should have at least 4 character")
 	@Column
 	private String password;
-	
-	//@NotNull
+
+	@NotNull
 	@Column
 	private String role;
-	
+
 	public Login() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param userId
 	 * @param userName
@@ -90,5 +89,5 @@ public class Login {
 	public String toString() {
 		return "Login [userId=" + userId + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
 	}
-	
+
 }

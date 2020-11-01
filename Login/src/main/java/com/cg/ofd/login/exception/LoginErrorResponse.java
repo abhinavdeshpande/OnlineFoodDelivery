@@ -5,9 +5,8 @@ public class LoginErrorResponse {
 
 	public LoginErrorResponse() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	private String message;
 	private long timeStamp;
 
@@ -41,6 +40,5 @@ public class LoginErrorResponse {
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
-	
+
 }

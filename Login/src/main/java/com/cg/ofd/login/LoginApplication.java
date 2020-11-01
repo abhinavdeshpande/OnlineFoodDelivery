@@ -24,15 +24,17 @@ public class LoginApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LoginApplication.class, args);
 	}
-	
+
 	@Bean
 	public Docket swaggerConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any()).apis(RequestHandlerSelectors.basePackage("com.cg.ofd")).build().apiInfo(myApiInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("com.cg.ofd")).build().apiInfo(myApiInfo());
 	}
-	
+
 	private ApiInfo myApiInfo() {
-		Contact contact = new Contact("Mugdha Chindhe","www.ofd.com","mugdhab6@gmail.com");
-		ApiInfo apiInfo = new ApiInfo("Login service CRUD Api", "Api Creation","2.0","Free to use",contact,"API licence","API licence URL",Collections.emptyList());
+		Contact contact = new Contact("Mugdha Chindhe", "www.ofd.com", "mugdhab6@gmail.com");
+		ApiInfo apiInfo = new ApiInfo("Login service CRUD Api", "Api Creation", "2.0", "Free to use", contact,
+				"API licence", "API licence URL", Collections.emptyList());
 		return apiInfo;
 	}
 

@@ -9,12 +9,12 @@ import com.cg.ofd.login.entities.Login;
 /**
  * @author Mugdha
  * 
- * LoginService Implementation
+ *         LoginService Implementation
  */
 
 @Service
 public class LoginServiceImpl implements LoginService {
-		
+
 	@Autowired
 	private LoginRepository loginRepository;
 
@@ -26,28 +26,28 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public Login findByuserNameAndPassword(String userName, String password) {
-		System.out.println("Inside findByuserNameAndPassword(String userName, String password) method");
-		Login tmpList = loginRepository.findByuserNameAndPassword(userName,password);
+		System.out.println("Inside findByuserNameAndPassword() method");
+		Login tmpList = loginRepository.findByuserNameAndPassword(userName, password);
 		return tmpList;
 	}
-	
+
 	@Override
 	public Login signUp(Login login) {
-		System.out.println("Inside signUp(Login login) method");
+		System.out.println("Inside signUp() method");
 		return this.loginRepository.save(login);
 	}
 
 	@Override
 	public Login findUserbyId(int userId) {
-		System.out.println("Inside findUserbyId(int userId) method");
+		System.out.println("Inside findUserbyId() method");
 		Login login = loginRepository.findById(userId).get();
 		return login;
 	}
 
 	@Override
 	public Login updateDetails(Login login) {
-		System.out.println("Inside updateDetails(Login login) method");
+		System.out.println("Inside updateDetails() method");
 		return loginRepository.save(login);
 	}
-	
+
 }

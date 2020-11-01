@@ -11,7 +11,5 @@ import com.cg.ofd.login.entities.Login;
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Integer> {
-	//public List<Login> retrieve();
 	public Login findByuserNameAndPassword(@Param("userName") String userName, @Param("password") String password);
-	//public Login signUp(@RequestBody Login customer);
 }
