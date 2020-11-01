@@ -2,6 +2,8 @@ package com.cg.ofd.login.controller;
 
 import java.util.Objects;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.ofd.login.config.JwtTokenUtil;
+import com.cg.ofd.login.exception.UserNotFoundException;
 import com.cg.ofd.login.model.JwtRequest;
 import com.cg.ofd.login.model.JwtResponse;
 import com.cg.ofd.login.model.LoginDTO;
@@ -43,13 +46,18 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
+		//String role = 
 		return ResponseEntity.ok(new JwtResponse(token));
+		//return ResponseEntity
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody LoginDTO user) throws Exception {
-		return ResponseEntity.ok(userDetailsService.save(user));
+	public ResponseEntity<?> saveUser(@Valid @RequestBody LoginDTO user) throws Exception {
+		if(user == null) {
+			throw new UserNotFoundException("Please send correct details");
+		}
+		else
+			return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

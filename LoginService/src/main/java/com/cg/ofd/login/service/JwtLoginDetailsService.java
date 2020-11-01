@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofd.login.dao.LoginDao;
+import com.cg.ofd.login.exception.UserNotFoundException;
 import com.cg.ofd.login.model.Login;
 import com.cg.ofd.login.model.LoginDTO;
 
@@ -38,7 +39,12 @@ public class JwtLoginDetailsService implements UserDetailsService,LoginService {
 		Login newUser = new Login();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		return loginDao.save(newUser);
+		newUser.setRole(user.getRole());
+		
+		
+			return loginDao.save(newUser);
+		
+		
 	}
 
 	@Override
@@ -47,18 +53,7 @@ public class JwtLoginDetailsService implements UserDetailsService,LoginService {
 		return loginDao.findAll();
 	}
 
-	@Override
-	public Login findByUsername(String userName) {
-		System.out.println("Inside findByuserNameAndPassword(String userName, String password) method");
-		Login tmpList = loginDao.findByUsername(userName);
-		return tmpList;
-	}
 	
-	@Override
-	public Login signUp(Login login) {
-		System.out.println("Inside signUp(Login login) method");
-		return this.loginDao.save(login);
-	}
 
 	@Override
 	public Login findUserbyId(int userId) {
@@ -72,5 +67,6 @@ public class JwtLoginDetailsService implements UserDetailsService,LoginService {
 		System.out.println("Inside updateDetails(Login login) method");
 		return loginDao.save(login);
 	}
+
 
 }
