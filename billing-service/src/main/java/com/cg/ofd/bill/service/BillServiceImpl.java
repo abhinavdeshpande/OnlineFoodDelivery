@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.cg.ofd.bill.dao.BillRepository;
 import com.cg.ofd.bill.entities.Bill;
+import com.cg.ofd.bill.entities.FoodCart;
+import com.cg.ofd.bill.entities.Items;
+import com.cg.ofd.bill.entities.OrderDetails;
+import com.cg.ofd.bill.proxies.OrderServiceProxy;
 
 /**
  * @author abhin
@@ -22,6 +26,9 @@ public class BillServiceImpl implements BillService {
 	
 	@Autowired
 	private BillRepository billRepository;
+	
+	@Autowired
+	private OrderServiceProxy orderProxy;
 
 	@Override
 	public Bill addBill(Bill bill) {
@@ -42,17 +49,6 @@ public class BillServiceImpl implements BillService {
 		return true;
 	}
 
-	/*
-	 * @Override public Bill viewBill(Bill bill) {
-	 * System.out.println("Inside viewBill() method"); return null; }
-	 * 
-	 * @Override public List<Bill> viewBills(LocalDate startDate, LocalDate endDate)
-	 * { // TODO Auto-generated method stub return null; }
-	 * 
-	 * @Override public List<Bill> viewBills(String custId) { // TODO Auto-generated
-	 * method stub return null; }
-	 */
-
 	@Override
 	public List<Bill> viewAllBills() {
 		System.out.println("Inside ViewAllBills() method");
@@ -60,8 +56,14 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public double calculateTotalCost() {
-		return 0;
+	public double calculateTotalCost(int orderId) {
+		
+		FoodCart foodCart = orderProxy.findOrdersById(orderId).getFoodCart();
+		double total = 0;
+		for (Items ip : foodCart.getItemList()) {
+	        total += ip.getCost()*ip.getQuantity();
+	    }
+		return total;
 	}
 
 }

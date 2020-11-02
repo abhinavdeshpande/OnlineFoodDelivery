@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.cg.ofd.bill.entities.Bill;
+import com.cg.ofd.bill.entities.Items;
 
 /**
  * @author abhinav
@@ -21,6 +22,6 @@ public interface BillService {
 	//public List<Bill> viewBills(LocalDate startDate,LocalDate endDate);
 	//public List<Bill> viewBills(String custId);
 	public List<Bill> viewAllBills();
-	public double calculateTotalCost();
+	public double calculateTotalCost(int orderId);
 	
 }

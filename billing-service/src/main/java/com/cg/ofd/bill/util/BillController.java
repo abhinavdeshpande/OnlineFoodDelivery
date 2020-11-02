@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.ofd.bill.entities.Bill;
+import com.cg.ofd.bill.entities.OrderDetails;
 import com.cg.ofd.bill.exception.BillNotFoundException;
+import com.cg.ofd.bill.proxies.OrderServiceProxy;
 import com.cg.ofd.bill.service.BillService;
 
 /**
@@ -38,16 +40,23 @@ public class BillController {
 
 	@Autowired
 	private BillService billService;
+	
+	@Autowired
+	private OrderServiceProxy orderProxy;
 
 	private static final Logger logger = LoggerFactory.getLogger(BillController.class);
 
-	@PostMapping("/bill/add")
-	public void addBill(@RequestBody Bill bill) {
+	@PostMapping("/bill/addBill/{orderId}")
+	public void addBill(@RequestBody Bill bill, @PathVariable int orderId) {
 		logger.info("Inside addBill() method of BillController");
 		
-		if (bill.getOrderId() == 0 && bill.getBillDate() == null && bill.getTotalItem() == 0)
+		OrderDetails order = orderProxy.findOrdersById(orderId);
+		bill.setOrder(order);
+		bill.setTotalItem(order.getFoodCart().getItemList().size());
+		bill.setTotalCost(billService.calculateTotalCost(orderId));
+		if (bill.getOrder() == null && bill.getBillDate() == null && bill.getTotalItem() == 0)
 			throw new BillNotFoundException("Can not add empty bill!!");
-		else if(bill.getOrderId() == 0 || bill.getBillDate() == null || bill.getTotalItem() == 0)
+		else if(bill.getOrder() == null || bill.getBillDate() == null || bill.getTotalItem() == 0)
 			throw new BillNotFoundException("Bill is invalid!!");
 		else {
 			billService.addBill(bill);
@@ -123,8 +132,9 @@ public class BillController {
 	public List<Bill> viewBills(@PathVariable int custId) {
 		logger.info("Inside viewBills(custId) method of BillController");
 		System.out.println(custId);
-
-		List<Bill> bills = billService.viewAllBills().stream().filter(id -> id.getCustId() == custId).collect(Collectors.toList());
+		
+		//List<OrderDetails> orders = orderProxy.findOrdersByCustomer(custId);
+		List<Bill> bills = billService.viewAllBills().stream().filter(id -> id.getOrder().getFoodCart().getCustomer().getCustomerId() == custId).collect(Collectors.toList());
 		if (bills.equals(null))
 			throw new BillNotFoundException("Bills with Cust Id: " + custId + " not found!!");
 

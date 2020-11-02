@@ -2,11 +2,15 @@ package com.cg.ofd.bill.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -23,7 +27,9 @@ public class Bill {
 	private int billId;
 	
 	@Column
-	private int orderId;
+	@OneToOne(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+	@JoinColumn(name = "orderId")
+	private OrderDetails order;
 	
 	@Column
 	@NotNull
@@ -33,10 +39,6 @@ public class Bill {
 	@Column
 	@NotNull
 	private double totalCost;
-	
-	@Column
-	@NotNull
-	private int custId;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
 	@Column(name = "billDate")
@@ -57,10 +59,10 @@ public class Bill {
 	 * @param totalCost
 	 * @param billDate
 	 */
-	public Bill(int billId, int orderId, int totalItem, double totalCost, LocalDate billDate) {
+	public Bill(int billId, OrderDetails order, int totalItem, double totalCost, LocalDate billDate) {
 		super();
 		this.billId = billId;
-		this.orderId = orderId;
+		this.order = order;
 		this.totalItem = totalItem;
 		this.totalCost = totalCost;
 		this.billDate = billDate;
@@ -74,12 +76,12 @@ public class Bill {
 		this.billId = billId;
 	}
 
-	public int getOrderId() {
-		return orderId;
+	public OrderDetails getOrder() {
+		return order;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setOrder(OrderDetails order) {
+		this.order = order;
 	}
 
 	public int getTotalItem() {
@@ -106,18 +108,10 @@ public class Bill {
 		this.billDate = billDate;
 	}
 
-	public int getCustId() {
-		return custId;
-	}
-
-	public void setCustId(int custId) {
-		this.custId = custId;
-	}
-
 	@Override
 	public String toString() {
-		return "Bill [billId=" + billId + ", orderId=" + orderId + ", totalItem=" + totalItem + ", totalCost="
-				+ totalCost + ", custId=" + custId + ", billDate=" + billDate + "]";
+		return "Bill [billId=" + billId + ", order=" + order + ", totalItem=" + totalItem + ", totalCost=" + totalCost
+				+ ", billDate=" + billDate + "]";
 	}
 	
 		
