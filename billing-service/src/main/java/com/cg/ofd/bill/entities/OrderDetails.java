@@ -1,5 +1,6 @@
 package com.cg.ofd.bill.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.sun.istack.internal.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -34,9 +36,9 @@ public class OrderDetails {
 	@GeneratedValue(generator = "order_id_sequence", strategy = GenerationType.SEQUENCE)
 	private int orderId;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
 	@NotNull
-	@JsonFormat(pattern = "yyyy-mm-dd")
-	private String orderDate;
+	private LocalDate orderDate;
 	
 	@NotNull
 	@Column(length = 20)
@@ -53,7 +55,7 @@ public class OrderDetails {
 				+ ", foodCart=" + foodCart + "]";
 	}
 
-	public OrderDetails(int orderId, String orderDate, String orderStatus, FoodCart foodCart) {
+	public OrderDetails(int orderId, LocalDate orderDate, String orderStatus, FoodCart foodCart) {
 		super();
 		this.orderId = orderId;
 		this.orderDate = orderDate;
@@ -69,11 +71,11 @@ public class OrderDetails {
 		this.orderId = orderId;
 	}
 
-	public String getOrderDate() {
+	public LocalDate getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
 

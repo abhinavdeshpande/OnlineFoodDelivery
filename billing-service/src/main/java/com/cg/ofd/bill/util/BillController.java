@@ -51,6 +51,7 @@ public class BillController {
 		logger.info("Inside addBill() method of BillController");
 		
 		OrderDetails order = orderProxy.findOrdersById(orderId);
+		bill.setBillDate(orderProxy.findOrdersById(orderId).getOrderDate());
 		bill.setOrder(order);
 		bill.setTotalItem(order.getFoodCart().getItemList().size());
 		bill.setTotalCost(billService.calculateTotalCost(orderId));
