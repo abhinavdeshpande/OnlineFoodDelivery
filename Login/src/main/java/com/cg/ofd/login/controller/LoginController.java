@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofd.login.dao.LoginRepository;
 import com.cg.ofd.login.entities.Login;
 import com.cg.ofd.login.exception.UserNotFoundException;
 import com.cg.ofd.login.service.LoginService;
@@ -30,6 +30,7 @@ import com.cg.ofd.login.service.LoginService;
 
 @RestController
 @RibbonClient(name = "Login")
+@CrossOrigin(origins = "http://localhost:4200")
 public class LoginController {
 	@Autowired
 	private LoginService loginService;
@@ -37,7 +38,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(Login.class);
 
 	// This method is to view all the details of login
-	@GetMapping("/login")
+	@GetMapping("/login/findAll")
 	public List<Login> retrieve() {
 		List<Login> login = loginService.retrieve();
 		if (login.isEmpty())
@@ -47,7 +48,7 @@ public class LoginController {
 	}
 
 	// This method is to find details by userID
-	@GetMapping("/login/{userId}")
+	@GetMapping("/login/findBy/{userId}")
 	public Login findUserbyId(@PathVariable int userId) {
 		Login login = loginService.findUserbyId(userId); // .findById(userId).get();
 		if (login == null)
@@ -67,13 +68,15 @@ public class LoginController {
 	}
 
 	// This method is to register OR SignUp the user
-	@PostMapping(path = "/login/signup")
+	@PostMapping(path = "/signup")
 	public Login signUp(@Valid @RequestBody Login login) {
 		if (login.getUserName() == null || login.getPassword() == null || login.getUserName().isEmpty()
 				|| login.getPassword().isEmpty()) {
 			throw new UserNotFoundException("Please fill details correctly");
 		} else {
+			login.setRole("Customer");
 			Login signup = loginService.signUp(login);
+			
 			return signup;
 		}
 	}

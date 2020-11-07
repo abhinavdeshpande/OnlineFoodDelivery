@@ -8,17 +8,13 @@ import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
-
 import org.springframework.validation.annotation.Validated;
 
 @Entity
 public class Login {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 
 	@NotNull
@@ -27,11 +23,10 @@ public class Login {
 	private String userName;
 
 	@NotNull
-	@Size(min = 4, message = "password should have at least 4 character")
+	@Size(min = 3, message = "password should have at least 3 character")
 	@Column
 	private String password;
 
-	@NotNull
 	@Column
 	private String role;
 

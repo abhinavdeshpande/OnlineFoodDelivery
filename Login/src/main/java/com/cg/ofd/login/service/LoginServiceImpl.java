@@ -12,11 +12,11 @@ import com.cg.ofd.login.entities.Login;
  *         LoginService Implementation
  */
 
-@Service
+@Service	//Business Functionalities
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
-	private LoginRepository loginRepository;
+	private LoginRepository loginRepository;	//Field injection
 
 	@Override
 	public List<Login> retrieve() {
@@ -34,6 +34,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public Login signUp(Login login) {
 		System.out.println("Inside signUp() method");
+		//login.setRole("Customer");
 		return this.loginRepository.save(login);
 	}
 
