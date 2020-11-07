@@ -1,0 +1,248 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+  <style>
+    body {
+      background-image: url(FormBackground.jpg);
+      height: 1500px;
+      background-size: cover;
+
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topnav">
+    <img src="Logo.jpg" alt="logo" width="50" height="50" />
+    <a class="active" href="#" class="fa fa-home">Home</a>
+
+    <div class="topnav-right">
+
+      <a [routerLink]="['/profile']" class="fa fa-user">Profile</a>
+      <a href="#" class="fa fa-sort">Your Orders</a>
+      <a href="#" class="fa fa-shopping-cart">Cart</a>
+      <a href="#" class="fa fa-sign-out">Sign out</a>
+    </div>
+
+  </div>
+
+  <br>
+
+
+
+
+  <div class="main">
+
+    <!-- Add Customer -->
+    <form (ngSubmit)="onSubmit()" #form="ngForm" class="container">
+      <!-- <div class="split left">
+     <div class="centered"> -->
+
+      <div>
+        <div style="text-align: center" class="myDiv ">
+          <h3 style="text-align: center; font-family: Georgia, 'Times New Roman', Times, serif; color: black;"> Customer
+            Details</h3>
+        </div>
+
+        <!-- <form (ngSubmit)="onSubmit()" #form="ngForm" class="container"> -->
+        <div class="form-group">
+          <div [hidden]="!submitted">
+            <label for="customerId">CustomerId</label>
+            <input class="form-control" placeholder="Enter Customer Id" type="text" ngModel name="customerId">
+          </div>
+
+
+          <div class="form-row">
+            <div class="col">
+              <label for="firstName"><b>First Name</b></label>
+              <input class="form-control" placeholder="Enter the First Name" ngModel required minlength="2"
+                maxlength="30" #ufirstName="ngModel" name="firstName" id="firstName">
+              <div *ngIf="form.submitted && ufirstName.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="ufirstName.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="ufirstName.errors.maxlength">Maximum 30 characters</div>
+                <div *ngIf="ufirstName.errors.minlength">Must have atleast 2 characters</div>
+              </div>
+            </div>
+            <div class="col">
+              <label for="lastName"><b>Last Name</b></label>
+              <input class="form-control" placeholder="Enter the Last Name" ngModel required minlength="2"
+                maxlength="30" #ulastName="ngModel" name="lastName" id="lastName">
+              <div *ngIf="form.submitted && ulastName.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="ulastName.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="ulastName.errors.maxlength">Maximum 30 characters</div>
+                <div *ngIf="ulastName.errors.minlength">Must have atleast 2 characters</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <label for="gender"><b>Gender</b></label>
+              <input class="form-control" placeholder="Male/Female/Other" ngModel required minlength="2" maxlength="30"
+                #ugender="ngModel" name="gender" id="gender">
+              <div *ngIf="form.submitted && ulastName.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="ulastName.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="ulastName.errors.maxlength">Maximum 30 characters</div>
+                <div *ngIf="ulastName.errors.minlength">Must have atleast 2 characters</div>
+              </div>
+
+            </div>
+
+            <div class="col">
+              <label for="age"><b>Age</b></label>
+              <input class="form-control" placeholder="Enter Age between 1-100" ngModel required minlength="2"
+                maxlength="10" #uage="ngModel" name="age" id="age">
+              <div *ngIf="form.submitted && ulastName.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="uage.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="uage.errors.maxlength">Maximum 10 digits</div>
+                <div *ngIf="uage.errors.minlength">Must have atleast 1 digits</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <label for="mobileNumber"><b>Mobile Number</b></label>
+              <input class="form-control" placeholder="Enter Mobile Number" ngModel required minlength="10"
+                maxlength="20" #umobileNo="ngModel" name="mobileNumber" id="mobileNumber">
+              <div *ngIf="form.submitted && umobileNo.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="umobileNo.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="umobileNo.errors.maxlength">Maximum 20 characters</div>
+                <div *ngIf="umobileNo.errors.minlength">Must have atleast 10 digits </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <label for="email"><b> Enter Email Id</b></label>
+              <input class="form-control" type="email" name="email" placeholder="Enter the email" ngModel
+                #uemail=ngModel id="email" required>
+              <div *ngIf="form.submitted && uemail.invalid" style="color: red;font-weight: bold;">
+                <div *ngIf="uemail.errors.required">Field Cannot be Empty</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="text-align: center" class="myDiv ">
+          <h3 style="text-align: center; font-family: Georgia, 'Times New Roman', Times, serif; color: black;"> Add
+            Address</h3>
+        </div>
+
+
+        <div class="form-group">
+          <div [hidden]="!submitted">
+            <label>AddressId</label>
+            <input class="form-control" placeholder="Enter Address Id" type="text" [(ngModel)]="address.addressId"
+              name="addressId">
+          </div>
+
+
+
+          
+            
+          <div class="form-row">
+            <div class="col">
+              <label for="buildingName"><b>Building Name</b></label>
+              <input class="form-control" placeholder="Enter Building Name" required minlength="4"
+                pattern="[A-Z][a-zA-Z]{3,}" type="text" [(ngModel)]="address.buildingName" #bname="ngModel"
+                name="buildingName" id="buildingName">
+              <div *ngIf="form.submitted && bname.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="bname.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="bname.errors.minlength">Must have atleast 4 characters</div>
+                <div *ngIf="bname.errors.pattern">It should start with Capital letter,only conatains characters</div>
+              </div>
+            </div>
+
+            <div class="col">
+              <label for="streetNo"><b>Street No</b></label>
+              <input class="form-control" placeholder="Enter StreetNo" required minlength="2" pattern="[a-zA-Z0-9]{2,}"
+                type="text" [(ngModel)]="address.streetNo" #street="ngModel" name="streetNo" id="streetNo">
+              <div *ngIf="form.submitted && street.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="street.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="street.errors.minlength">Must have atleast 2 characters</div>
+  
+              </div>
+            </div>
+          </div>
+             
+          <div class="form-row">
+            <div class="col">
+              <label for="area"><b>Area</b></label>
+              <input class="form-control" placeholder="Enter area" required minlength="4" pattern="[A-Z][a-zA-Z]{3,}"
+                type="text" [(ngModel)]="address.area" #area="ngModel" name="area" id="area">
+              <div *ngIf="form.submitted && area.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="area.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="area.errors.minlength">Must have atleast 4 characters</div>
+                <div *ngIf="area.errors.pattern">It should start with Capital letter,only conatains characters</div>
+              </div>
+            </div>
+
+            <div class="col">
+              <label for="city"><b>City</b></label>
+              <input class="form-control" placeholder="Enter City" required minlength="4" pattern="[A-Z][a-zA-Z]{3,}"
+                type="text" [(ngModel)]="address.city" #city="ngModel" name="city" id="city">
+              <div *ngIf="form.submitted && city.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="city.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="city.errors.minlength">Must have atleast 4 characters</div>
+                <div *ngIf="city.errors.pattern">It should start with Capital letter,only conatains characters</div>
+              </div>
+            </div>
+          </div>
+
+                      
+          <div class="form-row">
+            <div class="col">
+              <label for="state"><b>State</b></label>
+              <input class="form-control" placeholder="Enter State" required minlength="4" pattern="[A-Z][a-zA-Z]{3,}"
+                type="text" [(ngModel)]="address.state" #state="ngModel" name="state" id="state">
+              <div *ngIf="form.submitted && state.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="state.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="state.errors.minlength">Must have atleast 4 characters</div>
+                <div *ngIf="state.errors.pattern">It should start with Capital letter,only conatains characters</div>
+              </div>
+            </div>
+
+            <div class="col">
+              <label for="country"><b>Country</b></label>
+            <input class="form-control" placeholder="Enter Country" required minlength="4" pattern="[A-Z][a-zA-Z]{3,}"
+              type="text" [(ngModel)]="address.country" #country="ngModel" name="country" id="country">
+            <div *ngIf="form.submitted && country.invalid" class="form-input-error-msg alert alert-danger">
+              <div *ngIf="country.errors.required">Field Cannot be Empty</div>
+              <div *ngIf="country.errors.minlength">Must have atleast 4 characters</div>
+              <div *ngIf="country.errors.pattern">It should start with Capital letter,only conatains characters</div>
+            </div>
+            </div>
+
+            <div class="col">
+              <label for="pincode"><b>Pincode</b></label>
+              <input class="form-control" placeholder="Enter pincode" required minlength="6" pattern="[0-9]{6}"
+                type="text" [(ngModel)]="address.pincode" #pincode="ngModel" name="pincode" id="pincode">
+              <div *ngIf="form.submitted && pincode.invalid" class="form-input-error-msg alert alert-danger">
+                <div *ngIf="pincode.errors.required">Field Cannot be Empty</div>
+                <div *ngIf="pincode.errors.minlength">Must have 6 digits</div>
+                <div *ngIf="pincode.errors.pattern">It should only contain digits</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" routerlink="/home">Submit</button>
+        &nbsp;
+        <button type="reset" class="btn btn-success">Reset</button>
+
+      </div>
+
+      <!-- 
+     </div>
+   </div> -->
+    </form>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+  <style>
+    body {
+      background-image: url(background1.jpg);
+      height: 800px;
+      background-size: cover;
+
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+
+
+<body>
+
+  <div class="topnav">
+    <img src="Logo.jpg" alt="logo" width="50" height="50" />
+    <a class="active" href="#" class="fa fa-home">Home</a>
+
+    <div class="topnav-right">
+          
+   
+      <a [routerLink]="['/profile']" class="fa fa-user">Profile</a>
+      <a href="#" class="fa fa-sort">Your Orders</a>
+      <a href="#" class="fa fa-shopping-cart">Cart</a>
+      <a href="#" class="fa fa-sign-out">Sign out</a>
+    </div>
+
+
+  </div>
+
+  <div style="padding-left:16px">
+    <h2><b>Discover Restaurants </b></h2>
+    <h1>that deliver near you</h1>
+    
+      <div class="container h-100">
+        <div class="d-flex justify-content-left h-100">
+          <div class="searchbar">
+            <input class="search_input" type="text" name="" placeholder="Search...">
+            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+          </div>
+        </div>
+      </div> 
+  </div>
+ 
+</body>
+
+
+</html>
